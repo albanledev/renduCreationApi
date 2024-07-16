@@ -2,17 +2,34 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
+use App\Repository\UserRepository;
 use ApiPlatform\Metadata\ApiResource;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Delete;
+use App\State\UserPasswordHasherProcessor;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
-#[ApiResource()]
+#[ApiResource(
+  operations: [
+    new Get(),
+    new GetCollection(),
+    new Post(processor: UserPasswordHasherProcessor::class),
+    new Put(processor: UserPasswordHasherProcessor::class),
+    new Patch(processor: UserPasswordHasherProcessor::class),
+    new Delete(),
+],
+)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -33,7 +50,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Groups('read')]
     private ?string $password = null;
+ 
+    #[Groups('write')]
+    private ?string $plainPassword = null;
 
     /**
      * @var Collection<int, Commande>
@@ -108,6 +129,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->password = $password;
 
+        return $this;
+    }
+
+    public function getPlainPassword(): string
+    {
+        return $this->plainPassword;
+    }
+ 
+    public function setPlainPassword(string $plainPassword): static
+    {
+        $this->plainPassword = $plainPassword;
+ 
         return $this;
     }
 
