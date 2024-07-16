@@ -25,8 +25,8 @@ use App\State\UserPasswordHasherProcessor;
         new Get(),
         new GetCollection(),
         new Post(processor: UserPasswordHasherProcessor::class, security: "is_granted('ROLE_PATRON')"),
-        new Put(processor: UserPasswordHasherProcessor::class),
-        new Patch(processor: UserPasswordHasherProcessor::class),
+        new Put(processor: UserPasswordHasherProcessor::class, security: "is_granted('ROLE_PATRON')"),
+        new Patch(processor: UserPasswordHasherProcessor::class, security: "is_granted('ROLE_PATRON')"),
         new Delete(),
     ],
 )]
