@@ -23,7 +23,7 @@ Ce projet consiste à mettre en place une API avec Symfony et API Platform pour 
 
 1. Clonez le dépôt GitHub :
    ```bash
-   git clone https://github.com/albanledev/renduCreationApi.git
+   git clone git@github.com:albanledev/renduCreationApi.git
    ```
 2. Installez les dépendances PHP :
    ```bash
