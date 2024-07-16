@@ -42,6 +42,7 @@ class Commande
     public function __construct()
     {
         $this->listeBoissons = new ArrayCollection();
+        $this->createdDate = new \DateTime();
     }
 
     public function getId(): ?int
