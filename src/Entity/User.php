@@ -21,14 +21,14 @@ use App\State\UserPasswordHasherProcessor;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 #[ApiResource(
-  operations: [
-    new Get(),
-    new GetCollection(),
-    new Post(processor: UserPasswordHasherProcessor::class),
-    new Put(processor: UserPasswordHasherProcessor::class),
-    new Patch(processor: UserPasswordHasherProcessor::class),
-    new Delete(),
-],
+    operations: [
+        new Get(),
+        new GetCollection(),
+        new Post(processor: UserPasswordHasherProcessor::class),
+        new Put(processor: UserPasswordHasherProcessor::class),
+        new Patch(processor: UserPasswordHasherProcessor::class),
+        new Delete(),
+    ],
 )]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -52,7 +52,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     #[Groups('read')]
     private ?string $password = null;
- 
+
     #[Groups('write')]
     private ?string $plainPassword = null;
 
@@ -61,6 +61,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\OneToMany(targetEntity: Commande::class, mappedBy: 'serveur')]
     private Collection $commandes;
+
+
 
     public function __construct()
     {
@@ -136,11 +138,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->plainPassword;
     }
- 
+
     public function setPlainPassword(string $plainPassword): static
     {
         $this->plainPassword = $plainPassword;
- 
+
         return $this;
     }
 
