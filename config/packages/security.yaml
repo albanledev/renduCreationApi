@@ -1,4 +1,8 @@
 security:
+  role_hierarchy:
+    ROLE_PATRON: [ROLE_BARMAN, ROLE_SERVEUR]
+    ROLE_BARMAN: []
+    ROLE_SERVEUR: []
   # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
   password_hashers:
     Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: "auto"
