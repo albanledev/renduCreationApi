@@ -9,7 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
 
 #[ORM\Entity(repositoryClass: BoissonRepository::class)]
-#[ApiResource()]
+#[ApiResource(forceEager: false)]
+
 class Boisson
 {
     #[ORM\Id]
