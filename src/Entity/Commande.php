@@ -2,15 +2,21 @@
 
 namespace App\Entity;
 
-use App\Repository\CommandeRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
+use App\Repository\CommandeRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 
 #[ORM\Entity(repositoryClass: CommandeRepository::class)]
 #[ApiResource()]
+#[ApiFilter(SearchFilter::class, properties: ['id' => 'exact', 'status' => 'exact'])]
+
+
+
 class Commande
 {
     #[ORM\Id]
